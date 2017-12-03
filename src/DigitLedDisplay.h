@@ -29,7 +29,8 @@ class DigitLedDisplay
 		void write(byte address, byte data);
 		void clear();
 		void on();
-		void off();		
+		void off();	
+		void setDot(byte digit, bool dot);
 };
 
 #endif	//DigitLedDisplay.h
