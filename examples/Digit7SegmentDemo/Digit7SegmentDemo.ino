@@ -22,6 +22,14 @@ void loop() {
 
   /* Prints data to the display */
   ld.printDigit(12345678);
+  
+   //Moving dot demo
+  for(int i = 1;i<9;i++){
+  ld.setDot(i,true);
+  delay(500);
+  ld.setDot(i,false);
+  }
+   
   delay(500);
   ld.clear();
 
