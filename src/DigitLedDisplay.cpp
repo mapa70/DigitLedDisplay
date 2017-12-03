@@ -6,6 +6,8 @@
 #define SHUTDOWN_ADDR	12
 #define DISPLAYTEST_ADDR 15
 
+//MaPa70
+byte DLDscreendata [] = {0,0,0,0,0,0,0,0};
 
 DigitLedDisplay::DigitLedDisplay(int dinPin, int csPin, int clkPin) {
 	DIN_PIN = dinPin;
@@ -48,6 +50,9 @@ void DigitLedDisplay::off() {
 void DigitLedDisplay::clear() {
   for (int i = 1; i <=_digitLimit; i++) {
 	write(i, B00000000);
+	
+	//MaPa70
+	DLDscreendata[i-1] = B00000000;
   }
 }
 
@@ -55,6 +60,22 @@ void DigitLedDisplay::table(byte address, int val) {
 	byte tableValue;
 	tableValue = pgm_read_byte_near(charTable + val);
 	write(address, tableValue);
+	
+	//MaPa70
+	DLDscreendata[address-1] = tableValue;
+}
+
+//MaPa70
+void DigitLedDisplay::setDot(byte digit, bool dot) {
+	byte newValue = DLDscreendata[digit-1];
+	if(dot && newValue < 128) {
+			newValue +=128;
+		}
+	if (!dot && newValue > 128){
+			newValue -=128;
+		}
+	write(digit, newValue);
+	DLDscreendata[digit-1] = newValue;
 }
 
 void DigitLedDisplay::write(volatile byte address, volatile byte data) {
